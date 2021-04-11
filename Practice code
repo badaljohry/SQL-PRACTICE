@@ -1,0 +1,96 @@
+SELECT Count(*)
+From Attribute;
+	
+
+SELECT Count(Distinct id)
+From Business;
+
+SELECT Count(Distinct Business_id)
+From hours;
+
+SELECT Count(Distinct Businesss_id)
+From Category;
+
+SELECT Count(Distinct Business_id)
+From Attribute;
+
+SELECT COUNT(* ) FROM User
+WHERE id IS NULL OR
+name IS NULL OR
+review_count IS NULL OR
+yelping_since IS NULL OR
+useful IS NULL OR 
+funny IS NULL OR 
+cool IS NULL OR 
+fans IS NULL OR 
+average_stars IS NULL OR 
+compliment_hot IS NULL OR 
+compliment_more IS NULL OR 
+compliment_profile IS NULL OR 
+compliment_cute IS NULL OR 
+compliment_list IS NULL OR 
+compliment_note IS NULL OR 
+compliment_plain IS NULL OR 
+compliment_cool IS NULL OR 
+compliment_funny IS NULL OR 
+compliment_writer IS NULL OR 
+compliment_photos IS NULL;
+
+SELECT city, SUM(review_count)AS Reviews From Business 
+Group by city 
+ORDER BY Reviews DESC;
+
+SELECT stars, SUM(review_count) FROM Business
+WHERE City = 'Avon'
+GROUP BY stars;
+
+SELECT stars, SUM(review_count) FROM Business
+WHERE City = 'Beachwood'
+GROUP BY stars;
+
+SELECT id, name, review_count FROM user
+ORDER BY review_count DESC 
+LIMIT  3;
+
+SELECT id,name,fans, review_count FROM user
+ORDER BY fans DESC;
+
+SELECT COUNT(*) AS hatecount FROM Review 
+WHERE Text like '%hate%';
+
+SELECT COUNT(*) AS lovecount FROM Review 
+WHERE Text like '%love%';
+
+SELECT id,name,fans From user
+ORDER BY fans DESC 
+LIMIT 10;
+
+SELECT b.name,b.city,b.postal_code,c.category,h.hours,
+CASE 
+WHEN stars Between 2 and 3 THEN '2-3 stars'
+WHEN stars Between 4 and 5 THEN '4-5 stars'
+END as Rating 
+FROM Business b 
+b.review_count as Reviews 
+INNER JOIN Category c ON b.id = c.business_id 
+INNER JOIN Hours h ON b.id = h.business_id
+WHERE City ='Toronto'and Category='Bars'and rating in ('2-3 stars','4-5 stars')
+GROUP BY name
+ORDER BY stars DESC;
+
+
+SELECT count(distinct id), count(distinct city), avg(stars), avg(review_count),is_open From business
+Group By is_open;
+
+Select b.name as business, a.name as attribute, a.value, b.state, b.stars, b.review_count From business b
+Inner join category c on c.business_id = b.id
+Inner join attribute a on a.business_id = b.id
+Where (a.name like  'alcohol' or 
+a.name like 'wifi' or 
+a.name like 'goodforkids') and 
+category = 'Restaurants' and b.state ='ON'
+Order by  stars Desc ,
+review_count;
+
+
+
